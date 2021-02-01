@@ -4,7 +4,7 @@ let tableData = data;
 // Gathers Table References
 let t_body = d3.select("tbody");
 
-function createTable(data) {
+function fillTable(data) {
     t_body.html("");
 
     data.forEach((data_row) => {
@@ -17,3 +17,21 @@ function createTable(data) {
         );
     });
 }
+
+function filterOnClick() {
+
+    // Gets datetime value from the filter 
+    let date = d3.select("#datetime").property("value");
+    let data_Filtered = tableData;
+
+    if (date) {
+        data_Filtered = data_Filtered.filter(row => row.datetime === date);
+    }
+
+    fillTable(data_Filtered);
+}
+
+d3.selectAll("#filter-btn").on("click", filterOnClick);
+
+// Fills out the table when you load the page
+fillTable(tableData);
